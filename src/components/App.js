@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Search from "./Search";
 import User from "./User";
+import Error from "./Error";
 
 function App() {
   return (

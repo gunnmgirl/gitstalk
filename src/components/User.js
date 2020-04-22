@@ -1,6 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
+
 import getEvents from "../api/github";
+import PlusIcon from "../icons/PlusCircle";
+import MessageIcon from "../icons/MessageSquare";
+import StarIcon from "../icons/Star";
+import GitBranch from "../icons/GitBranch";
+
+const StyledItem = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
 
 function User() {
   const [events, setEvents] = useState([]);
@@ -18,19 +30,37 @@ function User() {
     switch (event.type) {
       case "PushEvent":
         return (
-          <p>
-            Pushed {event.payload.size}
-            {event.payload.size === 1 ? " commit to " : " commits to "}
-            {event.repo.name}
-          </p>
+          <StyledItem>
+            <PlusIcon />
+            <p>
+              Pushed {event.payload.size}
+              {event.payload.size === 1 ? " commit to " : " commits to "}
+              {event.repo.name}
+            </p>
+          </StyledItem>
         );
       case "CreateEvent": {
         if (event.payload.ref_type === "repository")
-          return <p>Created a repository {event.repo.name}</p>;
+          return (
+            <StyledItem>
+              <PlusIcon />
+              <p>Created a repository {event.repo.name}</p>
+            </StyledItem>
+          );
         else if (event.payload.ref_type === "branch")
-          return <p> Created a branch master in {event.repo.name}</p>;
+          return (
+            <StyledItem>
+              <GitBranch />
+              <p> Created a branch master in {event.repo.name}</p>
+            </StyledItem>
+          );
         else if (event.payload.ref_type === "tag")
-          return <p>Created a tag {event.repo.name}</p>;
+          return (
+            <StyledItem>
+              <PlusIcon />
+              <p>Created a tag {event.repo.name}</p>
+            </StyledItem>
+          );
         break;
       }
       case "PullRequestEvent": {
@@ -41,17 +71,30 @@ function User() {
         break;
       }
       case "IssueCommentEvent":
-        return <p>Created a comment on an issue in {event.repo.name}</p>;
+        return (
+          <StyledItem>
+            <MessageIcon />
+            <p>Created a comment on an issue in {event.repo.name}</p>
+          </StyledItem>
+        );
       case "ReleaseEvent":
         return <p>Published a release</p>;
       case "WatchEvent":
-        return <p> Starred a repo {event.repo.name}</p>;
+        return (
+          <StyledItem>
+            <StarIcon />
+            <p> Starred a repo {event.repo.name}</p>
+          </StyledItem>
+        );
       case "ForkEvent":
         return (
-          <p>
-            Forked a repo {event.repo.name} to
-            {event.payload.forkee.full_name}
-          </p>
+          <StyledItem>
+            <GitBranch />
+            <p>
+              Forked a repo {event.repo.name} to
+              {event.payload.forkee.full_name}
+            </p>
+          </StyledItem>
         );
       case "PullRequestReviewCommentEvent":
         return (
