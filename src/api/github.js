@@ -34,4 +34,4 @@ const instance = axios.create({
   },
 });
 
-export default getEvents;
+export { getEvents, getRepos, getUser };

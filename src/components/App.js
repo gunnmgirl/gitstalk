@@ -3,16 +3,19 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Search from "./Search";
 import User from "./User";
-import Error from "./Error";
+import GlobalStyle from "../style/GlobalStyle";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" exact component={Search} />
-        <Route path="/:username" component={User} />
-      </Switch>
-    </BrowserRouter>
+    <>
+      <GlobalStyle />
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact component={Search} />
+          <Route path="/:username" component={User} />
+        </Switch>
+      </BrowserRouter>
+    </>
   );
 }
 
