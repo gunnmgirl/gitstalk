@@ -1,15 +1,17 @@
 import React from "react";
 import styled from "styled-components";
+import { parseISO, formatISO } from "date-fns";
 
 import ArrowUpRight from "../icons/ArrowUpRight";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.backgroundSecondary};
+  color: ${(props) => props.theme.secondary};
   margin-right: 1rem;
   border: 0.03rem solid rgba(191, 191, 191, 0.5);
-  width: 17rem;
+  min-width: 19rem;
 `;
 
 const StyledFlexItem = styled.div`
@@ -29,8 +31,12 @@ const AvatarText = styled.div`
   flex-direction: column;
 `;
 
-const StyledText = styled.span`
-  color: #5c75f6;
+const HighlightedText = styled.span`
+  color: ${(props) => props.theme.highlight};
+`;
+
+const BoldText = styled.span`
+  color: ${(props) => props.theme.bold};
 `;
 
 const Avatar = styled.div`
@@ -60,20 +66,29 @@ const BlogLink = styled.a`
 `;
 
 function Info({ user, repos }) {
+  function getFormatedDate(dateString) {
+    if (dateString) {
+      const newDate = dateString.substring(0, dateString.length - 1);
+      const parsedDate = parseISO(newDate);
+      const date = formatISO(parsedDate, { representation: "date" });
+      return date;
+    } else return null;
+  }
+
   return (
     <Container>
       <StyledFlexItem>
         <Avatar>
           <AvatarImage src={user.avatar_url} alt="user avatar" />
           <AvatarText>
-            <span>
+            <BoldText>
               {user.name}
               <a href={user.html_url}>
                 <ArrowUpRight />
               </a>
-            </span>
+            </BoldText>
             <BlogLink href={user.blog}>
-              <StyledText>{user.blog}</StyledText>
+              <HighlightedText>{user.blog}</HighlightedText>
             </BlogLink>
           </AvatarText>
         </Avatar>
@@ -82,19 +97,19 @@ function Info({ user, repos }) {
         <UserInfo>
           <UserInfoRowItem>
             <span>Followers</span>
-            <span>{user.followers}</span>
+            <BoldText>{user.followers}</BoldText>
           </UserInfoRowItem>
           <UserInfoRowItem>
             <span>Following</span>
-            <span>{user.following}</span>
+            <BoldText>{user.following}</BoldText>
           </UserInfoRowItem>
           <UserInfoRowItem>
             <span>Repos</span>
-            <span>{user.public_repos}</span>
+            <BoldText>{user.public_repos}</BoldText>
           </UserInfoRowItem>
           <UserInfoRowItem>
             <span>Gists</span>
-            <span>{user.public_gists}</span>
+            <BoldText>{user.public_gists}</BoldText>
           </UserInfoRowItem>
         </UserInfo>
       </StyledFlexItem>
@@ -102,15 +117,15 @@ function Info({ user, repos }) {
         <UserInfo>
           <UserInfoColumnItem>
             <span>Joined</span>
-            <span>{user.created_at}</span>
+            <BoldText>{getFormatedDate(user.created_at)}</BoldText>
           </UserInfoColumnItem>
           <UserInfoColumnItem>
             <span>Location</span>
-            <StyledText>{user.location}</StyledText>
+            <HighlightedText>{user.location}</HighlightedText>
           </UserInfoColumnItem>
           <UserInfoColumnItem>
             <span>Last Updated on</span>
-            <span>{user.updated_at}</span>
+            <span>{getFormatedDate(user.updated_at)}</span>
           </UserInfoColumnItem>
         </UserInfo>
       </StyledFlexItem>

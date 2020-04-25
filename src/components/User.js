@@ -25,7 +25,7 @@ const StyledItem = styled.div`
 `;
 
 const StyledText = styled.span`
-  color: #5c75f6;
+  color: ${(props) => props.theme.highlight};
 `;
 
 const EventText = styled.p`
@@ -41,13 +41,20 @@ const Title = styled.h2`
 `;
 
 const Container = styled.div`
+  background-color: ${(props) => props.theme.backgroundPrimary};
+  color: ${(props) => props.theme.primary};
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  @media (min-width: 576px) {
+    flex-direction: row;
+  }
 `;
 
 const LatestActivity = styled.div`
-  width: 43rem;
-  background-color: #fff;
+  width: auto;
+  background-color: ${(props) => props.theme.backgroundSecondary};
+  color: ${(props) => props.theme.primary};
   border: 0.03rem solid rgba(191, 191, 191, 0.5);
 `;
 
@@ -97,8 +104,7 @@ function User() {
             <StyledItem>
               <GitBranchIcon />
               <EventText>
-                {" "}
-                Created a branch master in{" "}
+                Created a branch master in
                 <StyledText>{event.repo.name}</StyledText>
               </EventText>
             </StyledItem>
@@ -120,7 +126,7 @@ function User() {
             <StyledItem>
               <BookOpenIcon />
               <EventText>
-                Opened a pull request in{" "}
+                Opened a pull request in
                 <StyledText>{event.repo.name}</StyledText>
               </EventText>
             </StyledItem>
@@ -130,7 +136,7 @@ function User() {
             <StyledItem>
               <XIcon />
               <EventText>
-                Closed a pull request in{" "}
+                Closed a pull request in
                 <StyledText>{event.repo.name}</StyledText>
               </EventText>
             </StyledItem>
@@ -202,10 +208,6 @@ function User() {
         return null;
     }
   }
-
-  console.log("repos", repos);
-  console.log("events", events);
-  console.log("user", user);
 
   return (
     <Container>
