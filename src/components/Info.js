@@ -72,7 +72,8 @@ function Info({ user, repos }) {
       const parsedDate = parseISO(newDate);
       const date = formatISO(parsedDate, { representation: "date" });
       return date;
-    } else return null;
+    }
+    return null;
   }
 
   return (

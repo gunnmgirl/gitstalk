@@ -211,7 +211,7 @@ function User() {
 
   return (
     <Container>
-      <Info user={user} repos={repos} />
+      {user ? <Info user={user} repos={repos} /> : null}
       <LatestActivity>
         <Title>LATEST ACTIVITIES</Title>
         {events ? events.map((event) => renderEvents(event)) : null}
