@@ -10,7 +10,7 @@ import themes from "../themes";
 
 function App() {
   const dark = hooks.usePreferredTheme();
-  const theme = themes.dark; //dark; ? themes.dark : themes.light;
+  const theme = dark ? themes.dark : themes.light;
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />

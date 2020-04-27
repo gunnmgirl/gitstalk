@@ -5,6 +5,8 @@ const lightTheme = {
   secondary: "#888",
   highlight: "#5c75f6",
   bold: "#555",
+  warning: "#ff4d4d",
+  buttonText: "#fff",
 };
 
 export default lightTheme;
