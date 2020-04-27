@@ -7,11 +7,14 @@ import ArrowUpRight from "../icons/ArrowUpRight";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-self: start;
+  width: 100%;
   background-color: ${(props) => props.theme.backgroundSecondary};
   color: ${(props) => props.theme.secondary};
   margin-right: 1rem;
-  border: 0.03rem solid rgba(191, 191, 191, 0.5);
-  min-width: 19rem;
+  @media (min-width: 576px) {
+    border: 0.03rem solid rgba(191, 191, 191, 0.5);
+  }
 `;
 
 const StyledFlexItem = styled.div`
@@ -66,6 +69,8 @@ const BlogLink = styled.a`
 `;
 
 function Info({ user, repos }) {
+  const languages = [];
+
   function getFormattedDate(dateString) {
     if (dateString) {
       const newDate = dateString.substring(0, dateString.length - 1);
@@ -81,6 +86,15 @@ function Info({ user, repos }) {
       return new Intl.NumberFormat().format(num);
     }
     return null;
+  }
+
+  function getLanguages(repos) {
+    repos.map((repo) => {
+      if (!languages.includes(repo.language) && repo.language) {
+        return languages.push(repo.language);
+      }
+      return null;
+    });
   }
 
   return (
@@ -120,6 +134,12 @@ function Info({ user, repos }) {
             <BoldText>{getFormattedNumber(user.public_gists)}</BoldText>
           </UserInfoRowItem>
         </UserInfo>
+      </StyledFlexItem>
+      <StyledFlexItem>
+        {getLanguages(repos)}
+        {languages.map((language, index) => (
+          <HighlightedText key={index}>{language} </HighlightedText>
+        ))}
       </StyledFlexItem>
       <StyledFlexItem>
         <UserInfo>

@@ -24,8 +24,9 @@ const StyledItem = styled.div`
   align-items: center;
 `;
 
-const StyledText = styled.span`
+const StyledText = styled.a`
   color: ${(props) => props.theme.highlight};
+  text-decoration: none;
 `;
 
 const EventText = styled.p`
@@ -43,25 +44,26 @@ const Title = styled.h2`
 const Container = styled.div`
   background-color: ${(props) => props.theme.backgroundPrimary};
   color: ${(props) => props.theme.primary};
-  display: flex;
+  display: grid;
   justify-content: center;
-  flex-direction: column;
   @media (min-width: 576px) {
-    flex-direction: row;
+    grid-template-columns: auto auto;
   }
 `;
 
 const LatestActivity = styled.div`
-  width: auto;
   background-color: ${(props) => props.theme.backgroundSecondary};
   color: ${(props) => props.theme.primary};
-  border: 0.03rem solid rgba(191, 191, 191, 0.5);
+  @media (min-width: 576px) {
+    border: 0.03rem solid rgba(191, 191, 191, 0.5);
+    margin-left: 2rem;
+  }
 `;
 
 function User() {
-  const [events, setEvents] = useState([]);
-  const [repos, setRepos] = useState([]);
-  const [user, setUser] = useState({});
+  const [events, setEvents] = useState(undefined);
+  const [repos, setRepos] = useState(undefined);
+  const [user, setUser] = useState(undefined);
   const username = useParams().username;
 
   useEffect(() => {
@@ -80,41 +82,43 @@ function User() {
     switch (event.type) {
       case "PushEvent":
         return (
-          <StyledItem>
+          <StyledItem key={event.id}>
             <PlusIcon />
             <EventText>
               Pushed {event.payload.size}
               {event.payload.size === 1 ? " commit to " : " commits to "}
-              <StyledText>{event.repo.name}</StyledText>
+              <StyledText href={event.repo.url}>{event.repo.name}</StyledText>
             </EventText>
           </StyledItem>
         );
       case "CreateEvent": {
         if (event.payload.ref_type === "repository")
           return (
-            <StyledItem>
+            <StyledItem key={event.id}>
               <PlusIcon />
               <EventText>
-                Created a repository <StyledText>{event.repo.name}</StyledText>
+                Created a repository{" "}
+                <StyledText href={event.repo.url}>{event.repo.name}</StyledText>
               </EventText>
             </StyledItem>
           );
         else if (event.payload.ref_type === "branch")
           return (
-            <StyledItem>
+            <StyledItem key={event.id}>
               <GitBranchIcon />
               <EventText>
                 Created a branch master in
-                <StyledText>{event.repo.name}</StyledText>
+                <StyledText href={event.repo.url}>{event.repo.name}</StyledText>
               </EventText>
             </StyledItem>
           );
         else if (event.payload.ref_type === "tag")
           return (
-            <StyledItem>
+            <StyledItem key={event.id}>
               <PlusIcon />
               <EventText>
-                Created a tag <StyledText>{event.repo.name}</StyledText>
+                Created a tag{" "}
+                <StyledText href={event.repo.url}>{event.repo.name}</StyledText>
               </EventText>
             </StyledItem>
           );
@@ -123,21 +127,21 @@ function User() {
       case "PullRequestEvent": {
         if (event.payload.action === "opened")
           return (
-            <StyledItem>
+            <StyledItem key={event.id}>
               <BookOpenIcon />
               <EventText>
-                Opened a pull request in
-                <StyledText>{event.repo.name}</StyledText>
+                Opened a pull request in{" "}
+                <StyledText href={event.repo.url}>{event.repo.name}</StyledText>
               </EventText>
             </StyledItem>
           );
         else if (event.payload.action === "closed")
           return (
-            <StyledItem>
+            <StyledItem key={event.id}>
               <XIcon />
               <EventText>
-                Closed a pull request in
-                <StyledText>{event.repo.name}</StyledText>
+                Closed a pull request in{" "}
+                <StyledText href={event.repo.url}>{event.repo.name}</StyledText>
               </EventText>
             </StyledItem>
           );
@@ -145,61 +149,66 @@ function User() {
       }
       case "IssueCommentEvent":
         return (
-          <StyledItem>
+          <StyledItem key={event.id}>
             <MessageIcon />
             <EventText>
               Created a comment on an issue in{" "}
-              <StyledText>{event.repo.name}</StyledText>
+              <StyledText href={event.repo.url}>{event.repo.name}</StyledText>
             </EventText>
           </StyledItem>
         );
       case "WatchEvent":
         return (
-          <StyledItem>
+          <StyledItem key={event.id}>
             <StarIcon />
             <EventText>
-              {" "}
-              Starred a repo <StyledText>{event.repo.name}</StyledText>
+              Starred a repo{" "}
+              <StyledText href={event.repo.url}>{event.repo.name}</StyledText>
             </EventText>
           </StyledItem>
         );
       case "ForkEvent":
         return (
-          <StyledItem>
+          <StyledItem key={event.id}>
             <GitBranchIcon />
             <EventText>
-              Forked a repo <StyledText>{event.repo.name}</StyledText> to
-              {event.payload.forkee.full_name}
+              Forked a repo{" "}
+              <StyledText href={event.repo.url}>{event.repo.name}</StyledText>{" "}
+              to{" "}
+              <StyledText href={event.payload.forkee.html_url}>
+                {event.payload.forkee.full_name}
+              </StyledText>
             </EventText>
           </StyledItem>
         );
       case "PullRequestReviewCommentEvent":
         return (
-          <StyledItem>
+          <StyledItem key={event.id}>
             <MessageIcon />
             <EventText>
               Created a comment on their pull request in{" "}
-              <StyledText>{event.repo.name}</StyledText>
+              <StyledText href={event.repo.url}>{event.repo.name}</StyledText>
             </EventText>
           </StyledItem>
         );
       case "IssuesEvent":
         if (event.payload.action === "opened")
           return (
-            <StyledItem>
+            <StyledItem key={event.id}>
               <BookOpenIcon />
               <EventText>
-                {" "}
-                Opened an issue in <StyledText>{event.repo.name}</StyledText>
+                Opened an issue in{" "}
+                <StyledText href={event.repo.url}>{event.repo.name}</StyledText>
               </EventText>
             </StyledItem>
           );
         else if (event.payload.action === "closed")
           return (
-            <StyledItem>
+            <StyledItem key={event.id}>
               <XIcon />
               <EventText>
-                Closed an issue in <StyledText>{event.repo.name}</StyledText>
+                Closed an issue in{" "}
+                <StyledText href={event.repo.url}>{event.repo.name}</StyledText>
               </EventText>
             </StyledItem>
           );
@@ -211,11 +220,15 @@ function User() {
 
   return (
     <Container>
-      {user ? <Info user={user} repos={repos} /> : null}
-      <LatestActivity>
-        <Title>LATEST ACTIVITIES</Title>
-        {events ? events.map((event) => renderEvents(event)) : null}
-      </LatestActivity>
+      {user && events && repos ? (
+        <>
+          <Info user={user} repos={repos} />
+          <LatestActivity>
+            <Title>LATEST ACTIVITIES</Title>
+            {events.map((event) => renderEvents(event))}
+          </LatestActivity>
+        </>
+      ) : null}
     </Container>
   );
 }
