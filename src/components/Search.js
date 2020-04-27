@@ -25,6 +25,7 @@ const StyledInput = styled.input`
   height: 2rem;
   border: 0.03rem solid rgba(191, 191, 191, 0.5);
   border-radius: 3%;
+  font-size: 1rem;
 `;
 
 const StyledButton = styled.button`
@@ -38,11 +39,17 @@ const StyledButton = styled.button`
 const FormWarning = styled.p`
   font-size: 0.8rem;
   color: ${(props) => props.theme.warning};
-  padding-left: 5.5rem;
+  padding-left: 6.5rem;
 `;
 
 const SiteName = styled.span`
-  font-size: 1rem;
+  font-size: 1.2rem;
+  padding-right: 0.2rem;
+`;
+
+const StyledForm = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 function Search() {
@@ -76,18 +83,20 @@ function Search() {
           handleSubmit,
         }) => (
           <form onSubmit={handleSubmit}>
-            <SiteName>github.com/ </SiteName>
-            <StyledInput
-              type="text"
-              name="name"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.name}
-              placeholder="Enter Github Username"
-            />
-            <StyledButton type="submit" onClick={handleSubmit}>
-              Search
-            </StyledButton>
+            <StyledForm>
+              <SiteName>github.com/</SiteName>
+              <StyledInput
+                type="text"
+                name="name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.name}
+                placeholder="Enter Github Username"
+              />
+              <StyledButton type="submit" onClick={handleSubmit}>
+                Search
+              </StyledButton>
+            </StyledForm>
             {errors.name && touched.name ? (
               <FormWarning>{errors.name}</FormWarning>
             ) : null}

@@ -66,12 +66,19 @@ const BlogLink = styled.a`
 `;
 
 function Info({ user, repos }) {
-  function getFormatedDate(dateString) {
+  function getFormattedDate(dateString) {
     if (dateString) {
       const newDate = dateString.substring(0, dateString.length - 1);
       const parsedDate = parseISO(newDate);
       const date = formatISO(parsedDate, { representation: "date" });
       return date;
+    }
+    return null;
+  }
+
+  function getFormattedNumber(num) {
+    if (num) {
+      return new Intl.NumberFormat().format(num);
     }
     return null;
   }
@@ -98,19 +105,19 @@ function Info({ user, repos }) {
         <UserInfo>
           <UserInfoRowItem>
             <span>Followers</span>
-            <BoldText>{user.followers}</BoldText>
+            <BoldText>{getFormattedNumber(user.followers)}</BoldText>
           </UserInfoRowItem>
           <UserInfoRowItem>
             <span>Following</span>
-            <BoldText>{user.following}</BoldText>
+            <BoldText>{getFormattedNumber(user.following)}</BoldText>
           </UserInfoRowItem>
           <UserInfoRowItem>
             <span>Repos</span>
-            <BoldText>{user.public_repos}</BoldText>
+            <BoldText>{getFormattedNumber(user.public_repos)}</BoldText>
           </UserInfoRowItem>
           <UserInfoRowItem>
             <span>Gists</span>
-            <BoldText>{user.public_gists}</BoldText>
+            <BoldText>{getFormattedNumber(user.public_gists)}</BoldText>
           </UserInfoRowItem>
         </UserInfo>
       </StyledFlexItem>
@@ -118,7 +125,7 @@ function Info({ user, repos }) {
         <UserInfo>
           <UserInfoColumnItem>
             <span>Joined</span>
-            <BoldText>{getFormatedDate(user.created_at)}</BoldText>
+            <BoldText>{getFormattedDate(user.created_at)}</BoldText>
           </UserInfoColumnItem>
           <UserInfoColumnItem>
             <span>Location</span>
@@ -126,7 +133,7 @@ function Info({ user, repos }) {
           </UserInfoColumnItem>
           <UserInfoColumnItem>
             <span>Last Updated on</span>
-            <span>{getFormatedDate(user.updated_at)}</span>
+            <span>{getFormattedDate(user.updated_at)}</span>
           </UserInfoColumnItem>
         </UserInfo>
       </StyledFlexItem>
