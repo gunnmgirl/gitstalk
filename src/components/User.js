@@ -12,7 +12,6 @@ import GitBranchIcon from "../icons/GitBranch";
 import BookOpenIcon from "../icons/BookOpen";
 import XIcon from "../icons/X";
 import Info from "./Info";
-import Header from "./Header";
 
 const StyledItem = styled.div`
   border-bottom: 0.03rem solid rgba(191, 191, 191, 0.5);
@@ -44,6 +43,7 @@ const Container = styled.div`
   background-color: ${(props) => props.theme.backgroundPrimary};
   color: ${(props) => props.theme.primary};
   display: grid;
+  grid-gap: 2rem;
   justify-content: center;
   @media (min-width: 576px) {
     grid-template-columns: auto auto;
@@ -57,8 +57,12 @@ const LatestActivity = styled.div`
   @media (min-width: 576px) {
     border: 0.03rem solid rgba(191, 191, 191, 0.5);
     border-bottom: 0;
-    margin-left: 2rem;
   }
+`;
+
+const Loading = styled.h1`
+  text-align: center;
+  color: ${(props) => props.theme.secondary};
 `;
 
 function User() {
@@ -229,7 +233,9 @@ function User() {
             {events.map((event) => renderEvents(event))}
           </LatestActivity>
         </Container>
-      ) : null}
+      ) : (
+        <Loading>Loading..</Loading>
+      )}
     </>
   );
 }
