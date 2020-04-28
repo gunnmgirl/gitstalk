@@ -7,11 +7,16 @@ import styled from "styled-components";
 import GithubIcon from "../icons/GitHub";
 
 const Header = styled.div`
+  margin-top: 1rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
   color: ${(props) => props.theme.bold};
   font-weight: 600;
   font-size: 2rem;
+  @media (min-width: 576px) {
+    flex-direction: row;
+  }
 `;
 
 const Container = styled.div`
@@ -43,8 +48,12 @@ const FormWarning = styled.p`
 `;
 
 const SiteName = styled.span`
-  font-size: 1.2rem;
-  padding-right: 0.2rem;
+  display: none;
+  @media (min-width: 576px) {
+    display: block;
+    font-size: 1.2rem;
+    padding-right: 0.2rem;
+  }
 `;
 
 const StyledForm = styled.div`

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { parseISO, formatISO } from "date-fns";
+import { format } from "date-fns";
 
 import ArrowUpRight from "../icons/ArrowUpRight";
 
@@ -8,12 +8,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-self: start;
-  width: 100%;
   background-color: ${(props) => props.theme.backgroundSecondary};
   color: ${(props) => props.theme.secondary};
-  margin-right: 1rem;
   @media (min-width: 576px) {
     border: 0.03rem solid rgba(191, 191, 191, 0.5);
+    border-bottom: 0;
+    min-width: 19rem;
   }
 `;
 
@@ -72,13 +72,7 @@ function Info({ user, repos }) {
   const languages = [];
 
   function getFormattedDate(dateString) {
-    if (dateString) {
-      const newDate = dateString.substring(0, dateString.length - 1);
-      const parsedDate = parseISO(newDate);
-      const date = formatISO(parsedDate, { representation: "date" });
-      return date;
-    }
-    return null;
+    return format(new Date(dateString), "dd/MM/yyyy");
   }
 
   function getFormattedNumber(num) {

@@ -17,7 +17,6 @@ import Header from "./Header";
 const StyledItem = styled.div`
   border-bottom: 0.03rem solid rgba(191, 191, 191, 0.5);
   padding: 0 1rem;
-  margin-bottom: 0.6rem;
   margin-top: 0.6rem;
   display: flex;
   flex-direction: row;
@@ -48,6 +47,7 @@ const Container = styled.div`
   justify-content: center;
   @media (min-width: 576px) {
     grid-template-columns: auto auto;
+    margin: 1rem 1rem;
   }
 `;
 
@@ -56,6 +56,7 @@ const LatestActivity = styled.div`
   color: ${(props) => props.theme.primary};
   @media (min-width: 576px) {
     border: 0.03rem solid rgba(191, 191, 191, 0.5);
+    border-bottom: 0;
     margin-left: 2rem;
   }
 `;
@@ -219,17 +220,17 @@ function User() {
   }
 
   return (
-    <Container>
+    <>
       {user && events && repos ? (
-        <>
+        <Container>
           <Info user={user} repos={repos} />
           <LatestActivity>
             <Title>LATEST ACTIVITIES</Title>
             {events.map((event) => renderEvents(event))}
           </LatestActivity>
-        </>
+        </Container>
       ) : null}
-    </Container>
+    </>
   );
 }
 
