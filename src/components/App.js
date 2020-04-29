@@ -12,15 +12,17 @@ function App() {
   const dark = hooks.usePreferredTheme();
   const theme = dark ? themes.dark : themes.light;
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" exact component={Search} />
-          <Route path="/:username" component={User} />
-        </Switch>
-      </BrowserRouter>
-    </ThemeProvider>
+    <React.StrictMode>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <BrowserRouter>
+          <Switch>
+            <Route path="/" exact component={Search} />
+            <Route path="/:username" component={User} />
+          </Switch>
+        </BrowserRouter>
+      </ThemeProvider>
+    </React.StrictMode>
   );
 }
 

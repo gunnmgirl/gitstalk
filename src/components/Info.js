@@ -8,9 +8,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-self: start;
-  background-color: ${(props) => props.theme.backgroundSecondary};
+  background-color: ${(props) => props.theme.backgroundPrimary};
   color: ${(props) => props.theme.secondary};
   @media (min-width: 576px) {
+    background-color: ${(props) => props.theme.backgroundSecondary};
     border: 0.03rem solid rgba(191, 191, 191, 0.5);
     border-bottom: 0;
     min-width: 19rem;

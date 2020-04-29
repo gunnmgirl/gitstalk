@@ -10,8 +10,10 @@ import MessageIcon from "../icons/MessageSquare";
 import StarIcon from "../icons/Star";
 import GitBranchIcon from "../icons/GitBranch";
 import BookOpenIcon from "../icons/BookOpen";
+import GithubIcon from "../icons/GitHub";
 import XIcon from "../icons/X";
 import Info from "./Info";
+import SearchForm from "./SearchForm";
 
 const StyledItem = styled.div`
   border-bottom: 0.03rem solid rgba(191, 191, 191, 0.5);
@@ -43,18 +45,22 @@ const Container = styled.div`
   background-color: ${(props) => props.theme.backgroundPrimary};
   color: ${(props) => props.theme.primary};
   display: grid;
-  grid-gap: 2rem;
   justify-content: center;
-  @media (min-width: 576px) {
+  align-items: center;
+  padding: 1rem 0;
+  grid-gap: 2rem;
+  @media (min-width: 768px) {
+    grid-template-rows: auto auto;
     grid-template-columns: auto auto;
-    margin: 1rem 1rem;
+    padding: 1rem 1rem;
   }
 `;
 
 const LatestActivity = styled.div`
-  background-color: ${(props) => props.theme.backgroundSecondary};
+  background-color: ${(props) => props.theme.backgroundPrimary};
   color: ${(props) => props.theme.primary};
   @media (min-width: 576px) {
+    background-color: ${(props) => props.theme.backgroundSecondary};
     border: 0.03rem solid rgba(191, 191, 191, 0.5);
     border-bottom: 0;
   }
@@ -63,6 +69,27 @@ const LatestActivity = styled.div`
 const Loading = styled.h1`
   text-align: center;
   color: ${(props) => props.theme.secondary};
+`;
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: ${(props) => props.theme.bold};
+  font-weight: 600;
+  font-size: 1rem;
+  @media (min-width: 576px) {
+    flex-direction: row;
+  }
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+  }
 `;
 
 function User() {
@@ -227,6 +254,15 @@ function User() {
     <>
       {user && events && repos ? (
         <Container>
+          <Wrapper>
+            <Header>
+              <GithubIcon size="2rem" />
+              <h1>GITSTALK</h1>
+            </Header>
+          </Wrapper>
+          <Wrapper>
+            <SearchForm />
+          </Wrapper>
           <Info user={user} repos={repos} />
           <LatestActivity>
             <Title>LATEST ACTIVITIES</Title>
