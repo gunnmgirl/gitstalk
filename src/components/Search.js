@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -70,48 +70,41 @@ function Search() {
       .required("Must be at least 1 character"),
   });
 
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+    },
+    onSubmit: (values) => {
+      history.push(`/${values.name}`);
+    },
+    validationSchema,
+  });
+
   return (
     <Container>
       <Header>
         <GithubIcon size="3rem" />
         <h1>GITSTALK</h1>
       </Header>
-      <Formik
-        initialValues={{ name: "" }}
-        validationSchema={validationSchema}
-        onSubmit={(values) => {
-          history.push(`/${values.name}`);
-        }}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <StyledForm>
-              <SiteName>github.com/</SiteName>
-              <StyledInput
-                type="text"
-                name="name"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.name}
-                placeholder="Enter Github Username"
-              />
-              <StyledButton type="submit" onClick={handleSubmit}>
-                Search
-              </StyledButton>
-            </StyledForm>
-            {errors.name && touched.name ? (
-              <FormWarning>{errors.name}</FormWarning>
-            ) : null}
-          </form>
-        )}
-      </Formik>
+      <form onSubmit={formik.handleSubmit}>
+        <StyledForm>
+          <SiteName>github.com/</SiteName>
+          <StyledInput
+            type="text"
+            name="name"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.name}
+            placeholder="Enter Github Username"
+          />
+          <StyledButton type="submit" onClick={formik.handleSubmit}>
+            Search
+          </StyledButton>
+        </StyledForm>
+        {formik.errors.name && formik.touched.name ? (
+          <FormWarning>{formik.errors.name}</FormWarning>
+        ) : null}
+      </form>
     </Container>
   );
 }
