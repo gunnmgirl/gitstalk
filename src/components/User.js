@@ -69,6 +69,7 @@ const LatestActivity = styled.div`
 const Loading = styled.h1`
   text-align: center;
   color: ${(props) => props.theme.secondary};
+  background-color: ${(props) => props.theme.backgroundPrimary};
 `;
 
 const Header = styled.div`

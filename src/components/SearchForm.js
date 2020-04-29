@@ -20,7 +20,7 @@ const StyledInput = styled.input`
 const StyledButton = styled.button`
   background-color: ${(props) => props.theme.highlight};
   color: ${(props) => props.theme.buttonText};
-  border: 0.03rem solid rgba(191, 191, 191, 0.5);
+  border: 0;
   height: 2rem;
   font-size: 0.9rem;
 `;
