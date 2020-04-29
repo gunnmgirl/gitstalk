@@ -16,7 +16,7 @@ import Info from "./Info";
 import SearchForm from "./SearchForm";
 
 const StyledItem = styled.div`
-  border-bottom: 0.03rem solid rgba(191, 191, 191, 0.5);
+  border-bottom: 0.03rem solid ${(props) => props.theme.border};
   padding: 0 1rem;
   margin-top: 0.6rem;
   display: flex;
@@ -35,7 +35,7 @@ const EventText = styled.p`
 
 const Title = styled.h2`
   font-weight: 500;
-  border-bottom: 0.03rem solid rgba(191, 191, 191, 0.5);
+  border-bottom: 0.03rem solid ${(props) => props.theme.border};
   padding: 1rem 1rem;
   margin-bottom: 0.6rem;
   margin-top: 0.6rem;
@@ -61,7 +61,7 @@ const LatestActivity = styled.div`
   color: ${(props) => props.theme.primary};
   @media (min-width: 576px) {
     background-color: ${(props) => props.theme.backgroundSecondary};
-    border: 0.03rem solid rgba(191, 191, 191, 0.5);
+    border: 0.03rem solid ${(props) => props.theme.border};
     border-bottom: 0;
   }
 `;
@@ -75,7 +75,7 @@ const Header = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: ${(props) => props.theme.bold};
+  color: ${(props) => props.theme.enhance};
   font-weight: 600;
   font-size: 1rem;
   @media (min-width: 576px) {

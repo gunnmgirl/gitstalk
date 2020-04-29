@@ -7,7 +7,9 @@ import styled from "styled-components";
 const StyledInput = styled.input`
   width: auto;
   height: 2rem;
-  border: 0.03rem solid rgba(191, 191, 191, 0.5);
+  border: 0.03rem solid ${(props) => props.theme.border};
+  background-color: ${(props) => props.theme.backgroundSecondary};
+  color: ${(props) => props.theme.primary};
   border-radius: 3%;
   font-size: 1rem;
   @media (min-width: 576px) {
@@ -31,6 +33,7 @@ const FormWarning = styled.p`
 
 const SiteName = styled.span`
   display: none;
+  color: ${(props) => props.theme.primary};
   @media (min-width: 576px) {
     display: block;
     font-size: 1.2rem;

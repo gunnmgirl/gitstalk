@@ -4,9 +4,10 @@ const lightTheme = {
   primary: "#666",
   secondary: "#888",
   highlight: "#5c75f6",
-  bold: "#555",
+  enhance: "#555",
   warning: "#ff4d4d",
   buttonText: "#fff",
+  border: "rgba(191, 191, 191, 0.5)",
 };
 
 export default lightTheme;

@@ -12,7 +12,7 @@ const Container = styled.div`
   color: ${(props) => props.theme.secondary};
   @media (min-width: 576px) {
     background-color: ${(props) => props.theme.backgroundSecondary};
-    border: 0.03rem solid rgba(191, 191, 191, 0.5);
+    border: 0.03rem solid ${(props) => props.theme.border};
     border-bottom: 0;
     min-width: 19rem;
   }
@@ -20,7 +20,7 @@ const Container = styled.div`
 
 const StyledFlexItem = styled.div`
   padding: 1rem 1rem;
-  border-bottom: 0.03rem solid rgba(191, 191, 191, 0.5);
+  border-bottom: 0.03rem solid ${(props) => props.theme.border};
 `;
 
 const AvatarImage = styled.img`
@@ -40,7 +40,7 @@ const HighlightedText = styled.span`
 `;
 
 const BoldText = styled.span`
-  color: ${(props) => props.theme.bold};
+  color: ${(props) => props.theme.enhance};
 `;
 
 const Avatar = styled.div`
@@ -67,6 +67,7 @@ const UserInfoColumnItem = styled.div`
 
 const BlogLink = styled.a`
   text-decoration: none;
+  color: ${(props) => props.theme.highlight};
 `;
 
 function Info({ user, repos }) {
@@ -100,9 +101,9 @@ function Info({ user, repos }) {
           <AvatarText>
             <BoldText>
               {user.name}
-              <a href={user.html_url}>
+              <BlogLink href={user.html_url}>
                 <ArrowUpRight />
-              </a>
+              </BlogLink>
             </BoldText>
             <BlogLink href={user.blog}>
               <HighlightedText>{user.blog}</HighlightedText>

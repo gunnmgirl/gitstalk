@@ -9,7 +9,7 @@ const Header = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: ${(props) => props.theme.bold};
+  color: ${(props) => props.theme.enhance};
   font-weight: 600;
   font-size: 2rem;
   @media (min-width: 576px) {
@@ -19,8 +19,10 @@ const Header = styled.div`
 
 const Container = styled.div`
   display: flex;
+  height: 100vh;
   flex-direction: column;
   align-items: center;
+  background-color: ${(props) => props.theme.backgroundPrimary};
 `;
 
 function Search() {
