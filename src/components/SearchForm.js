@@ -28,7 +28,9 @@ const StyledButton = styled.button`
 const FormWarning = styled.p`
   font-size: 0.8rem;
   color: ${(props) => props.theme.warning};
-  padding-left: 6.5rem;
+  @media (min-width: 576px) {
+    padding-left: 6.5rem;
+  }
 `;
 
 const SiteName = styled.span`
