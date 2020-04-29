@@ -97,16 +97,19 @@ function User() {
   const [events, setEvents] = useState(undefined);
   const [repos, setRepos] = useState(undefined);
   const [user, setUser] = useState(undefined);
+  const [fetching, setFetching] = useState(true);
   const username = useParams().username;
 
   useEffect(() => {
     async function fetchData() {
+      setFetching(true);
       const eventsResult = await getEvents(username);
       const reposResult = await getRepos(username);
       const userResult = await getUser(username);
       setEvents(eventsResult.data);
       setUser(userResult.data);
       setRepos(reposResult.data);
+      setFetching(false);
     }
     fetchData();
   }, [username]);
@@ -253,7 +256,7 @@ function User() {
 
   return (
     <>
-      {user && events && repos ? (
+      {!fetching ? (
         <Container>
           <Wrapper>
             <Header>
