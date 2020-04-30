@@ -66,8 +66,12 @@ const LatestActivity = styled.div`
   }
 `;
 
-const Loading = styled.h1`
-  text-align: center;
+const Loading = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4rem;
   color: ${(props) => props.theme.secondary};
   background-color: ${(props) => props.theme.backgroundPrimary};
 `;
