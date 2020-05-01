@@ -35,7 +35,6 @@ const EventText = styled.p`
 
 const Title = styled.h2`
   font-weight: 500;
-  border-bottom: 0.03rem solid ${(props) => props.theme.border};
   padding: 1rem 1rem;
   margin-bottom: 0.6rem;
   margin-top: 0.6rem;
@@ -46,23 +45,23 @@ const Container = styled.div`
   color: ${(props) => props.theme.primary};
   display: grid;
   justify-content: center;
-  align-items: center;
+  height: 100%;
+  min-height: 100vh;
   padding: 1rem 0;
   grid-gap: 2rem;
   @media (min-width: 768px) {
     grid-template-rows: auto auto;
     grid-template-columns: auto auto;
-    padding: 1rem 1rem;
   }
 `;
 
 const LatestActivity = styled.div`
   background-color: ${(props) => props.theme.backgroundPrimary};
   color: ${(props) => props.theme.primary};
+  height: min-content;
   @media (min-width: 576px) {
     background-color: ${(props) => props.theme.backgroundSecondary};
     border: 0.03rem solid ${(props) => props.theme.border};
-    border-bottom: 0;
   }
 `;
 
@@ -97,23 +96,36 @@ const Wrapper = styled.div`
   }
 `;
 
+const UserNotFound = styled.div`
+  display: flex;
+  justify-content: center;
+  color: ${(props) => props.theme.secondary};
+`;
+
 function User() {
   const [events, setEvents] = useState(undefined);
   const [repos, setRepos] = useState(undefined);
   const [user, setUser] = useState(undefined);
   const [fetching, setFetching] = useState(true);
+  const [userNotFound, setUserNotFound] = useState(false);
   const username = useParams().username;
 
   useEffect(() => {
     async function fetchData() {
-      setFetching(true);
-      const eventsResult = await getEvents(username);
-      const reposResult = await getRepos(username);
-      const userResult = await getUser(username);
-      setEvents(eventsResult.data);
-      setUser(userResult.data);
-      setRepos(reposResult.data);
-      setFetching(false);
+      try {
+        setFetching(true);
+        const eventsResult = await getEvents(username);
+        const reposResult = await getRepos(username);
+        const userResult = await getUser(username);
+        setEvents(eventsResult.data);
+        setUser(userResult.data);
+        setRepos(reposResult.data);
+        setUserNotFound(false);
+        setFetching(false);
+      } catch (err) {
+        setUserNotFound(true);
+        setFetching(false);
+      }
     }
     fetchData();
   }, [username]);
@@ -271,11 +283,19 @@ function User() {
           <Wrapper>
             <SearchForm />
           </Wrapper>
-          <Info user={user} repos={repos} />
-          <LatestActivity>
-            <Title>LATEST ACTIVITIES</Title>
-            {events.map((event) => renderEvents(event))}
-          </LatestActivity>
+          {userNotFound ? (
+            <UserNotFound>
+              <h2>User not found!</h2>
+            </UserNotFound>
+          ) : (
+            <>
+              <Info user={user} repos={repos} />
+              <LatestActivity>
+                <Title>LATEST ACTIVITIES</Title>
+                {events ? events.map((event) => renderEvents(event)) : null}
+              </LatestActivity>
+            </>
+          )}
         </Container>
       ) : (
         <Loading>Loading..</Loading>

@@ -14,7 +14,7 @@ const Container = styled.div`
     background-color: ${(props) => props.theme.backgroundSecondary};
     border: 0.03rem solid ${(props) => props.theme.border};
     border-bottom: 0;
-    min-width: 19rem;
+    max-width: 20rem;
   }
 `;
 
