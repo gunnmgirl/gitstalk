@@ -16,6 +16,10 @@ const Container = styled.div`
     border-bottom: 0;
     max-width: 20rem;
   }
+  @media (min-width: 768px) {
+    position: sticky;
+    top: 0;
+  }
 `;
 
 const StyledFlexItem = styled.div`
