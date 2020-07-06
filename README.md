@@ -1,6 +1,7 @@
 # Gitstalk
 
 Discover who's upto what on Github!
+Project that uses React Router for navigation, Formik that handles form and Yup for form validation.
 
 Visit [Gitstalk](http://mygitstalk.surge.sh/)
 
